@@ -1,0 +1,269 @@
+/* * {
+    border: solid white 1px
+} */
+
+:root {
+    --main: #2C3333;
+    --second: #3F4E4F;
+    --light: #F1F1F1;
+    --ubuntu: "Ubuntu", sans-serif;
+} 
+
+
+/* Logo and Navigation */
+body {
+    padding: 8px;
+    background-color: var(--main);
+}
+
+
+.logo {
+    font-family: "Alfa Slab One", serif;
+    font-size: 24px;
+    display: inline;
+    color: var(--light);
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.bi-list {
+    display: inline;
+    width: 20;
+    height: 13;
+    color: var(--light);
+}
+
+p {
+    padding-top: 0;
+    margin: 0;
+
+}
+
+.offcanvas {
+    background-color: var(--second);
+    color: var(--light);
+}
+
+/* Carousel */
+.carousel {
+    padding: 0;
+    margin: 8px 0;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.image_head {
+    height: 162px;
+    object-fit: cover;
+    image-resolution: from-image 300dpi;
+
+}
+
+.header-1 {
+    background-color: red;
+    background-image: url("/Images/jobless_reincarnation.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+
+}
+
+.header-2 {
+    background-color: red;
+    background-image: url("/Images/mobusekai.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: content-box;
+}
+
+.header-3 {
+    background-color: red;
+    background-image: url("/Images/reincarnated_as_sword.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: content-box;
+    background-position: center;
+}
+
+
+
+/* Content Books */
+ h1 {
+    color: var(--light);
+    font-family: var(--ubuntu);
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    margin-left: 32px;
+    font-size: 32px;
+}
+
+
+.entry-image {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding: 8px;
+}
+
+.book{
+    background-color: #3F4E4F;
+    border: var(--light) 1px solid;
+    margin: 16px;
+}
+
+.book-data {
+    padding: 0 8px 0;
+    font-family: "Ubuntu", sans-serif;
+    color: #F1F1F1;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 16px;
+}
+
+.card-volume {
+    font-size: 8px;
+}
+
+.book:hover {
+    scale: 105%;
+    cursor: pointer;
+}
+
+/* Genres */
+.box {
+    width: 150px;
+    height: 150px;
+    background-color: #3F4E4F;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F1F1F1;
+    border: #F1F1F1 solid 1px;
+    font-size: 16px;
+}
+
+.genre-text {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.genre-container {
+    position: flex;
+    justify-content: center;
+}
+
+.box:hover {
+    scale: 105%;
+}
+
+
+/* Navigation Panel */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    width: 100%;
+    padding: 8px 4px;
+    list-style: none;
+    font-size: 24px;
+    border-top:#F1F1F1 2px solid ;
+}
+
+li:hover {
+    cursor: pointer;
+}
+
+.btn-close {
+    background-color: #F1F1F1;
+}
+
+li:hover{
+    background-color: #2C3333;
+}
+
+
+
+@media (min-width: 481px) {
+    .image_head {
+        height: 300px;
+    }
+}
+
+@media (min-width: 769px) {
+    .logo {
+        font-size: 52px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .bi {
+        font-size: 32px;
+    }
+    .image_head {
+        max-height: 400px;
+        image-rendering: optimizeQuality;
+    }
+    .genre {
+        font-size: 42px;
+    }
+
+    .card-title {
+        font-size: 24px;
+    }
+
+    .card-volume {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .image_head {
+        height: 900px;
+        max-width: 1200px;
+        image-rendering: optimizeQuality;
+    }
+    html {
+        padding: 0 64px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .box {
+        width: 200px;
+        height: 200px;
+        border: #F1F1F1 solid 2px;
+    }
+
+    body {
+        border: #3F4E4F solid 2px;
+    }
+
+    .genre {
+        height: 300px;
+        font-size: 42px;
+        display: flex;
+        vertical-align: middle;
+        align-items: center;
+    }
+
+
+}
