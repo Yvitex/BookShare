@@ -12,8 +12,9 @@
 
 /* Logo and Navigation */
 body {
-    padding: 8px;
+    padding: 0px 8px;
     background-color: var(--main);
+    font-family: "Ubuntu", sans-serif;
 }
 
 
@@ -28,7 +29,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 0;
+    margin: 2px 0;
 }
 
 .bi-list {
@@ -52,7 +53,7 @@ p {
 /* Carousel */
 .carousel {
     padding: 0;
-    margin: 8px 0;
+    margin: 4px 0;
 }
 
 .container {
@@ -62,6 +63,7 @@ p {
 }
 
 .image_head {
+    width: 100%;
     height: 162px;
     object-fit: cover;
     image-resolution: from-image 300dpi;
@@ -70,7 +72,7 @@ p {
 
 .header-1 {
     background-color: red;
-    background-image: url("/Images/jobless_reincarnation.jpg");
+    background-image: url("../Images/jobless_reincarnation.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
@@ -79,7 +81,7 @@ p {
 
 .header-2 {
     background-color: red;
-    background-image: url("/Images/mobusekai.jpg");
+    background-image: url("../Images/mobusekai.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-clip: content-box;
@@ -87,23 +89,26 @@ p {
 
 .header-3 {
     background-color: red;
-    background-image: url("/Images/reincarnated_as_sword.jpg");
+    background-image: url("../Images/reincarnated_as_sword.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-clip: content-box;
     background-position: center;
 }
 
+.input-name {
+    color: #F1F1F1;
+    margin-bottom: 8px;
+}
 
 
 /* Content Books */
- h1 {
+ .category-name {
     color: var(--light);
-    font-family: var(--ubuntu);
+    font-family: "Ubuntu", sans-serif;
     padding: 0;
     margin-top: 16px;
     margin-bottom: 8px;
-    margin-left: 32px;
     font-size: 32px;
 }
 
@@ -111,14 +116,16 @@ p {
 .entry-image {
     width: 100%;
     height: 100%;
-    margin: auto;
     padding: 8px;
+    margin: auto;
+    opacity: 1 !important;
 }
 
 .book{
     background-color: #3F4E4F;
     border: var(--light) 1px solid;
     margin: 16px;
+    transition: all 0.3s;
 }
 
 .book-data {
@@ -143,16 +150,16 @@ p {
 
 /* Genres */
 .box {
-    width: 150px;
-    height: 150px;
-    background-color: #3F4E4F;
     margin: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #F1F1F1;
-    border: #F1F1F1 solid 1px;
-    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 52px;
+    background: #2C3333;
+    box-shadow: inset -21px -21px 43px #222828,
+                inset 21px 21px 43px #363e3e;
+    width: 90%;
 }
 
 .genre-text {
@@ -194,8 +201,106 @@ li:hover {
     background-color: #F1F1F1;
 }
 
+a {
+    color: #F1F1F1;
+    text-decoration: none;
+}
+
 li:hover{
     background-color: #2C3333;
+    color: #3F4E4F;
+}
+
+
+/* Form Component */
+.form-container {
+    border: #3F4E4F 1px solid;
+    padding: 8px 24px;
+    border-radius: 8px;
+}
+
+.container-data {
+    display: inline-block;
+    margin-left: 16px;
+}
+
+.user-input{
+    background-color: #E2DCC8;
+}
+
+.hide-input{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.button-upload {
+    border: #F1F1F1 2px solid;
+    padding: 4px 16px;
+    color: #F1F1F1;
+}
+
+/* Items */
+.cover-photo-container {
+    padding: 16px 0;
+}
+
+.cover-photo {
+    border-radius: 8px;
+    width: 100%;
+    margin: 0;
+    max-height: 450px;
+}
+
+a:hover{
+    color: inherit;
+}
+
+/* Metadata  */
+.metadata-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+    color: #F1F1F1;
+}
+
+.meta-name {
+    font-weight: bolder;
+}
+
+.download-button {
+    margin-top: 8px;
+    width: 100%;
+    border: #F1F1F1 2px solid;
+    padding: 4px 16px;
+    background-color: #2C3333;
+    color: #F1F1F1;
+}
+
+button:hover {
+    scale: 105%;
+}
+
+.description{
+    color: #F1F1F1;
+}
+
+.submit-btn{
+    margin-top: 16px;
+    border-color: #E2DCC8;
+    color: #E2DCC8;
+    width: 100%;
+}
+
+.submit-btn:hover, .submit-btn:focus, .submit-btn:active, .submit-btn:visited{
+    border-color: #E2DCC8;
+    background-color: #E2DCC8;
+    color: #2C3333;
+    
+}
+
+.hide-if-small{
+    display: none;
 }
 
 
@@ -204,9 +309,19 @@ li:hover{
     .image_head {
         height: 300px;
     }
+
+    li {
+        font-size: 16px;
+    }
+
+    .hide-if-large{
+        display: inherit;
+    }
+
+
 }
 
-@media (min-width: 769px) {
+@media (min-width: 670px) {
     .logo {
         font-size: 52px;
     }
@@ -227,22 +342,49 @@ li:hover{
     }
 
     .card-title {
-        font-size: 24px;
+        font-size: 16px;
     }
 
     .card-volume {
+        font-size: 12px;
+    }
+    
+    .entry-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .meta-value, .item-title {
+        margin: 4px;
+    }
+
+    .meta-value {
         font-size: 16px;
     }
+
+    .item-title {
+        font-size: 32px;
+    }
+
+    .hide-if-large{
+        display: none;
+    }
+
+    .hide-if-small{
+        display: inline;
+    }
+
 }
 
 @media (min-width: 1025px) {
+
     .image_head {
         height: 900px;
         max-width: 1200px;
         image-rendering: optimizeQuality;
     }
     html {
-        padding: 0 64px;
+        padding: 0 32px;
         max-width: 1200px;
         margin: auto;
     }
@@ -250,11 +392,12 @@ li:hover{
     .box {
         width: 200px;
         height: 200px;
-        border: #F1F1F1 solid 2px;
+        
     }
 
     body {
         border: #3F4E4F solid 2px;
+        padding: 0 32px;
     }
 
     .genre {
@@ -263,6 +406,10 @@ li:hover{
         display: flex;
         vertical-align: middle;
         align-items: center;
+    }
+
+    .meta-value {
+        font-size: 20px;
     }
 
 

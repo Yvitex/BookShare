@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="cover-photo-container col col-4">
+            <img src="/uploads/images/<%=itemInfo.image%>" class="cover-photo" alt="">
+            <form action="/download" method="post" target="_blank">
+                <a href="<%=itemInfo.downloadLink%>" target="_blank">
+                    <button name="idName" value="<%=itemInfo._id%>" class="download-button">Download</button>
+                </a>
+            </form>
+
+        </div> 
+        
+        <div class="metadata-container col col-8">
+            <h1 class="item-title"> <%= itemInfo.title.toUpperCase() %> </h1>
+            <div class="meta-data">
+                <p class="meta-value"><span class="meta-name">Volume: </span> <%= itemInfo.volume %> </p>
+                <p class="meta-value"><span class="meta-name">Author: </span><%= itemInfo.author %></p>
+                <p class="meta-value"><span class="meta-name">Date Shared: </span><%= itemInfo.createdAt.toLocaleDateString("en-US") %></p>
+                <p class="meta-value"><span class="meta-name">Shared by: </span><%= %>None</p>
+                <p class="meta-value"><span class="meta-name">Rating: </span><%= %> None</p>
+            </div>
+            <div class="summary-section hide-if-small">
+                <h1 class="category-name">Summary</h1>
+                <p class="description"><%= itemInfo.summary %></p>
+            </div>
+        </div>
+
+    </div>    
+</div>
+
+<div class="section-container">
+    <h1 class="category-name">Other Volumes</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="owl-carousel">
+                <% books.forEach(function(data) { %>
+                <div class="card book">
+                    <a href="/item/<%=data._id%>">
+                    <img class="entry-image" src="/uploads/images/<%=data.image%>" alt="">
+                    <div class="card-body book-data">
+                        <h5 class="card-title no-hover">
+                            <%= data.title.length > 15 ? data.title.slice(0 , 15).toUpperCase() + "..." : data.title.toUpperCase() %>
+                        </h5>
+                        <p class="card-text card-volume no-hover">Vol: <%= data.volume %></p>
+                    </a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<div class="summary-section hide-if-large">
+    <h1 class="category-name">Summary</h1>
+    <p class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore magni, exercitationem accusantium itaque unde quisquam, consequuntur, eum soluta dolorem optio excepturi odio totam asperiores reprehenderit voluptatibus fuga distinctio repellat expedita!</p>
+</div>
+
+<%- include("partials/footer") %>
+
+

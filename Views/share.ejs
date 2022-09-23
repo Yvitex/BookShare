@@ -1,0 +1,89 @@
+<%- include("partials/header") %>
+
+
+<form action="/submitBook" class="form-container" method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 col-lg-7">
+                <h3 class="input-name">Title</h3>
+                <div class="input-group mb-3">
+                    <input
+                    type="text"
+                    class="form-control user-input"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="bookTitle"
+                    required
+                    />
+                </div>
+            </div>
+
+            <div class="col col-12 col-lg-4">
+                <h3 class="input-name">Author</h3>
+                <div class="input-group mb-3">
+                    <input
+                    type="text"
+                    class="form-control user-input"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="authorName"
+                    required
+                    />
+                </div>  
+            </div>
+
+            <div class="col col-12 col-lg-7">
+                <h3 class="input-name">Download Link</h3>
+                <div class="input-group mb-3">
+                    <input
+                    type="text"
+                    class="form-control user-input"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="downloadLink"
+                    required
+                    />
+                </div>
+            </div>
+
+            <div class="col col-3 col-lg-2">
+                <h3 class="input-name">Volume</h3>
+                <div class="input-group mb-3">
+                    <input
+                    type="number"
+                    class="form-control user-input"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="volumeNumber"
+                    required
+                    />
+                </div>
+            </div>
+
+            <div class="col col-12 col-lg-7">
+                <h3 class="input-name">Summary</h3>
+                <div class="input-group mb-3">
+                    <textarea name="summaryDescription" class="form-control user-input" rows="10" aria-label="With textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="col col-12 col-lg-5">
+                <h3 class="input-name">Cover Photo</h3>
+                <div class="input-group mb-3">
+                    <input type="file" id="upload" name="bookCover" required hidden/>
+                    <label for="upload" class="button-upload">Upload Cover</label>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="file" id="upload" hidden/>
+                    <label for="upload" class="button-upload">Upload Background</label hidden>
+                </div>
+            </div>
+
+    </div>
+    <button type="submit" class="col col-sm-12 submit-btn btn btn-outline-secondary">Submit Book Detail</button>
+
+</form>
+
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,93 @@
+<%- include("partials/header") %>
+
+    <div id="carouselExampleControls" class="carousel slide container-fluid" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active image_head header-1">
+            <!-- <img src="./Images/jobless_reincarnation.jpg" class="d-block w-100 image_head" alt="..."> -->
+            </div>
+            <div class="carousel-item image_head header-2 ">
+            <!-- <img src="./Images/mobusekai.jpg" class="d-block w-100 image_head" alt="..."> -->
+            </div>
+            <div class="carousel-item image_head header-3 ">
+            <!-- <img src="./Images/reincarnated_as_sword.jpg" class="d-block w-100 image_head" alt="..."> -->
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+<!-- New Entries -->
+<div class="section-container">
+    <h1 class="category-name">New Entries</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="owl-carousel">
+                <% newBooks.forEach(function(data) { %>
+                <div class="card book">
+                    <a href="/item/<%=data._id%>">
+                    <img class="entry-image" src="uploads/images/<%=data.image%>" alt="">
+                    <div class="card-body book-data">
+                        <h5 class="card-title no-hover"><%= data.title.length > 15 ? data.title.slice(0 , 15).toUpperCase() + "..." : data.title.toUpperCase() %></h5>
+                        <p class="card-text card-volume no-hover">Vol: <%= data.volume %></p>
+                    </a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Downloads -->
+<div class="section-container">
+    <h1 class="category-name">Top Downloads</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="owl-carousel">
+                <% downloadedBooks.forEach(function(data) { %>
+                <div class="card book">
+                    <a href="/item/<%=data._id%>">
+                    <img class="entry-image" src="uploads/images/<%=data.image%>" alt="">
+                    <div class="card-body book-data">
+                        <h5 class="card-title no-hover"><%= data.title.length > 15 ? data.title.slice(0 , 15).toUpperCase() + "..." : data.title.toUpperCase() %></h5>
+                        <p class="card-text card-volume no-hover">Vol: <%= data.volume %></p>
+                    </a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1 class="category-name">Genres</h1>
+
+<div class="container-fluid">
+    <div class="row genre-container">
+        <div class="container-fluid">
+            <div class="row genre-container centers">
+                <div class="box">
+                    <h2 class="genre-text">Action</h2>
+                </div>
+                <div class="box">
+                    <h2 class="genre-text">Philosophical</h2>
+                </div>
+                <div class="box">
+                    <h2 class="genre-text">Drama</h2>
+                </div>
+                <div class="box">
+                    <h2 class="genre-text">Comedy</h2>
+                </div>
+            </div>
+        </div>
+               
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
