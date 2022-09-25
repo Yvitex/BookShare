@@ -47,29 +47,89 @@ class Database{
         this.Book = mongoose.model("Book", this.bookSchema);
     }
 
-    getLatest(){
-        this.collection = {}
-        this.Book.find({}).sort('-createdAt').limit(10).exec(function(err, newBooks){
-            if(newBooks != null){
-                this.latest = newBooks;
-            }
+    async getLatest(){
+        try {
+            this.latestAdded = await this.Book.find({}).sort('-createdAt').limit(10);
+            return this.latestAdded;
+        }
+        catch (err){
+            console.log(err)
+        }
 
-            console.log(newBooks)
-        })
-
-        // this.Book.find({}).sort('-meta.downloads').limit(10).exec(function(err, topDownloadedBooks){
-        //    this.collection.topDownloads = topDownloadedBooks;
-        //    console.log(topDownloadedBooks)
-        // })
-
-        // console.log(this.collection)
-        
-        // this.Book.find({}, function(err, found){
-        //     console.log(found)
-        // })
-
-        // console.log(this.Book)
     }
+
+    async getMostDownloaded(){
+        try {
+            this.mostDownloaded = await this.Book.find({}).sort('-meta.downloads').limit(10);
+            return this.mostDownloaded;
+        }
+        catch (err){
+            console.log(err)
+        }
+    }
+
+    async getBookInfo(idName){
+        try{
+            this.bookInfo = await this.Book.findById(idName);
+            return this.bookInfo;
+        }
+        catch (err){
+            console.log(err);
+        }
+    }
+
+    async getRelatedBooks(bookTitle){
+        try{
+            this.relatedBooks = await this.Book.find({title: bookTitle});
+            return this.relatedBooks;
+        }
+        catch (err){
+            console.log(err);
+        }
+    }
+
+    async getInfoAndRelatedBooks(idName){
+        try{
+            this.collection = {}
+            this.collection.bookInfo = await this.Book.findById(idName);
+            this.collection.relatedBooks = await this.Book.find({title: this.collection.bookInfo.title})
+            return this.collection;
+        }
+        catch (err){
+            console.log(err)
+        }
+    }
+
+    // postNewBook(bookTitle, volumeNumber, authorName, downloadLink, summaryDescription, imageName){
+    //     this.Book.findOne({title: req.body.bookTitle.toLowerCase(), volume: req.body.volumeNumber}, function(err, foundBook){
+    //         if(foundBook){
+    //             console.log("already Exist")
+    //             console.log(foundBook)
+    //         }
+    //         else{
+    //             console.log("Creating Book Space")
+    //             const newBook = new Book({
+    //                 title: req.body.bookTitle.toLowerCase(),
+    //                 author: req.body.authorName,
+    //                 downloadLink: req.body.downloadLink,
+    //                 volume: req.body.volumeNumber,
+    //                 summary: req.body.summaryDescription,
+    //                 image: req.file.filename
+    //             })
+            
+    //             newBook.save(function(error){
+    //                 if(!error){
+    //                     console.log("Saved To DB")
+    //                     res.redirect('/')
+    //                 }
+    //                 else{
+    //                     console.log(err)
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
+
 }
 
 module.exports = Database;
