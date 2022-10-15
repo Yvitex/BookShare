@@ -1,8 +1,7 @@
 <%- include("partials/header") %>
 <div class="container-fluid">
     <div class="row">
-
-        <div class="cover-photo-container col col-4">
+        <div class="cover-photo-container col col-4 col-lg-3">
             <img src="/uploads/images/<%=itemInfo.image%>" class="cover-photo" alt="">
             <form action="/download" method="post" target="_blank">
                 <a href="<%=itemInfo.downloadLink%>" target="_blank">
@@ -12,14 +11,15 @@
 
         </div> 
         
-        <div class="metadata-container col col-8">
+        <div class="metadata-container col col-8 col-lg-9">
             <h1 class="item-title"> <%= itemInfo.title.toUpperCase() %> </h1>
             <div class="meta-data">
                 <p class="meta-value"><span class="meta-name">Volume: </span> <%= itemInfo.volume %> </p>
                 <p class="meta-value"><span class="meta-name">Author: </span><%= itemInfo.author %></p>
                 <p class="meta-value"><span class="meta-name">Date Shared: </span><%= itemInfo.createdAt.toLocaleDateString("en-US") %></p>
-                <p class="meta-value"><span class="meta-name">Shared by: </span><%= %>None</p>
+                <p class="meta-value"><span class="meta-name">Shared by: </span><%=itemInfo.uploader %></p>
                 <p class="meta-value"><span class="meta-name">Rating: </span><%= %> None</p>
+                <p class="meta-value"><span class="meta-name">Downloads: </span><%= itemInfo.meta.downloads %></p>
             </div>
             <div class="summary-section hide-if-small">
                 <h1 class="category-name">Summary</h1>

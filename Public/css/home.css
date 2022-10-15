@@ -17,10 +17,9 @@ body {
     font-family: "Ubuntu", sans-serif;
 }
 
-
 .logo {
     font-family: "Alfa Slab One", serif;
-    font-size: 24px;
+    font-size: 16px;
     display: inline;
     color: var(--light);
 }
@@ -29,7 +28,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 2px 0;
+    margin: 8px 0 0;
 }
 
 .bi-list {
@@ -53,7 +52,7 @@ p {
 /* Carousel */
 .carousel {
     padding: 0;
-    margin: 4px 0;
+    margin: 0px 0px 32px ;
 }
 
 .container {
@@ -119,6 +118,7 @@ p {
     padding: 8px;
     margin: auto;
     opacity: 1 !important;
+    height: 230px;
 }
 
 .book{
@@ -133,6 +133,11 @@ p {
     font-family: "Ubuntu", sans-serif;
     color: #F1F1F1;
     margin-bottom: 8px;
+}
+
+.card{
+    min-height: 300px;
+    min-width: 150px;
 }
 
 .card-title {
@@ -202,7 +207,7 @@ li:hover {
 }
 
 a {
-    color: #F1F1F1;
+    color: inherit;
     text-decoration: none;
 }
 
@@ -214,8 +219,7 @@ li:hover{
 
 /* Form Component */
 .form-container {
-    border: #3F4E4F 1px solid;
-    padding: 8px 24px;
+    padding: 24px 24px;
     border-radius: 8px;
 }
 
@@ -268,6 +272,10 @@ a:hover{
     font-weight: bolder;
 }
 
+.item-title {
+    font-weight: bold;
+}
+
 .download-button {
     margin-top: 8px;
     width: 100%;
@@ -275,6 +283,7 @@ a:hover{
     padding: 4px 16px;
     background-color: #2C3333;
     color: #F1F1F1;
+    font-size: 8px;
 }
 
 button:hover {
@@ -303,6 +312,161 @@ button:hover {
     display: none;
 }
 
+/* Landing Page */
+.landing-page{
+    padding: 32px 0;
+    color: #F1F1F1;
+    font-weight: 400;
+}
+
+.landing-photo{
+    width: 100%;
+}
+
+.landing-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.border{
+    border: 1px solid white;
+}
+
+
+.catchphrase{
+    font-family: 'Alfa Slab One', serif;
+    font-size: 24px;
+}
+
+.start-btn{
+    margin-top: 16px;
+    width: 100%;
+}
+
+.box2{
+    border: 2px solid #F1F1F1;
+    width: 300px;
+    height: 300px;
+    margin: 16px 8px;
+    border-radius: 8px;
+    color: #F1F1F1;
+}
+
+.feature-container{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 32px 0;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.feature-image{
+    overflow-block:inherit;
+    width: auto;
+    position: relative;
+    top: -70px; 
+}
+
+.features{
+    margin-top: 24px;
+}
+
+/* Log-in */
+.account-page-container{
+    visibility: hidden;
+    position: absolute;
+    top: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    background-color: #E2DCC8;
+    border-radius: 16px;
+    padding: 8px 16px;
+    font-family: "Ubunty", sans-serif;
+    width: 90%;
+    z-index: 1;
+}
+
+.account-page-container i{
+    font-size: 24px;
+}
+
+.login-color{
+    color: #2C3333;
+    font-weight: 400;
+    font-weight: bolder;
+    font-size: 24px;
+}
+
+.login-info{
+    font-weight: bold;
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.input-text{
+    color: #668888;
+}
+
+.line{
+    display: inline-block;
+    border-top: #222828 solid 1px;
+    width: 50%;
+    margin: 0 8px;
+}
+
+.separator-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.icon-container{
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+}
+
+.bi-facebook, .bi-google{
+    font-size: 32px;
+    margin: 0 16px;
+    transition: all 0.4s;
+}
+
+.bi-facebook:hover, .bi-google:hover{
+    font-size: 40px;
+}
+
+.login-button{
+    width: 100%;
+    margin: 8px 0;
+    color: #F1F1F1;
+    background-color: #3F4E4F;
+}
+
+.account-notice{
+    font-size: 12px;
+    margin: 16px 0;
+}
+
+.switch{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.bi-x{
+    font-size: 32px;
+}
 
 
 @media (min-width: 481px) {
@@ -318,20 +482,44 @@ button:hover {
         display: inherit;
     }
 
-
 }
 
 @media (min-width: 670px) {
-    .logo {
-        font-size: 52px;
+
+    .download-button{
+        font-size: 16px;
+    }
+
+    .account-page-container{
+        max-width: 600px;
+    }
+
+    .account-page-container i{
+        font-size: 32px;
+    }
+
+    .login-info{
+        font-size: 24px;
+    }
+
+    .login-color{
+        font-size: 32px;
+    }
+
+    .account-page-container{
+        padding: 8px 40px;
+    }
+
+    .logo{
+        font-size:40px;
     }
 
     h1 {
         font-size: 32px;
     }
 
-    .bi {
-        font-size: 32px;
+    .bi-list {
+        font-size: 24px;
     }
     .image_head {
         max-height: 400px;
@@ -351,7 +539,7 @@ button:hover {
     
     .entry-image {
         width: 100%;
-        height: auto;
+        height: 250px;
     }
 
     .meta-value, .item-title {
@@ -373,19 +561,23 @@ button:hover {
     .hide-if-small{
         display: inline;
     }
-
 }
 
 @media (min-width: 1025px) {
+
+    .entry-image{
+        height: 260px;
+    }
 
     .image_head {
         height: 900px;
         max-width: 1200px;
         image-rendering: optimizeQuality;
     }
+    
     html {
         padding: 0 32px;
-        max-width: 1200px;
+        max-width: 1300px;
         margin: auto;
     }
 
@@ -396,8 +588,9 @@ button:hover {
     }
 
     body {
-        border: #3F4E4F solid 2px;
+        /* border: #3F4E4F solid 2px; */
         padding: 0 32px;
+        border-radius: 8px;
     }
 
     .genre {
@@ -408,9 +601,7 @@ button:hover {
         align-items: center;
     }
 
-    .meta-value {
-        font-size: 20px;
-    }
+
 
 
 }

@@ -1,0 +1,105 @@
+<%-include("partials/header2")%>
+<div class="landing-page">
+    <div class="fluid-container">
+        <div class="row">
+            <div class="col col-12 col-sm-12 col-lg-6">
+                <img class="landing-photo" src="/Images/landing_pic.png" alt="">
+            </div>
+            <div class="landing-text col col-12 col-sm-12 col-lg-6">
+                <h2 class="catchphrase">Share the Book that you Love</h2>
+                <p class="intro">Lets build a Community that allows you to download and share the books that you need 100% FREE!!</p>
+                <a><button type="submit" class="btn btn-secondary start-btn animate-button">Get Started</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="feature-container">
+    <div class="box2">
+        <div class="feature-image">
+            <img src="/Images/croods-sitting.png" alt="">
+            <h2 class="catchphrase features">Share</h2>
+        </div>
+    </div>   
+    <div class="box2">
+        <div class="feature-image">
+            <img src="/Images/dayflow_sitting.png" alt="">
+            <h2 class="catchphrase features">Download</h2>
+        </div>
+    </div>  
+    <div class="box2">
+        <div class="feature-image">
+            <img  src="/Images/hobbies_hobbies.png" alt="">
+            <h2 class="catchphrase features">Read</h2>
+        </div>
+    </div>   
+</div>
+
+<div class="account-page-container login-page">
+    <form action="/login" method="post">
+        <div class="top-nav">
+            <h2 class="category-name login-color">Log In</h2>
+            <i class="bi bi-x close-login"></i>
+        </div>
+        <p class="login-info">Username</p>
+        <div class="form-floating mb-3 input-text">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Mike Wazowski</label>
+        </div>
+          <p class="login-info">Password</p>
+        <div class="form-floating mb-3 input-text">
+            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label class="hide-if-small" for="floatingInput">examplepassword123!!</label>
+        </div>
+        <div class="separator-container">
+            <div class="line"></div>
+            <span>or</span>
+            <div class="line"></div>
+        </div>
+        <div class="icon-container">
+            <a href="/auth/facebook"><i class="bi bi-facebook"></i></a>
+            <a href="/auth/google"><i class="bi bi-google"></i></a>
+        </div>
+        <button type="submit" class="btn btn-secondary login-button">Log In</button>
+        <p class="account-notice">Don’t have an account? <span class="switch sw-signup">Sign Up</span> instead</p>
+    </form>
+</div>
+
+<div class="account-page-container signup-page">
+    <form  action="/signup" method="post">
+        <div class="top-nav">
+            <h2 class="category-name login-color">Create Account</h2>
+            <i class="bi bi-x close-signup"></i>
+        </div>
+        <p class="login-info">Username</p>
+        <div class="form-floating mb-3 input-text">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Mike Wazowski</label>
+        </div>
+        <p class="login-info">Email</p>
+        <div class="form-floating mb-3 input-text">
+            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">sample@gmail.com</label>
+        </div>
+          <p class="login-info">Password</p>
+        <div class="form-floating mb-3 input-text">
+            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">examplepassword123!!</label>
+        </div>
+        <div class="separator-container">
+            <div class="line"></div>
+            <span>or</span>
+            <div class="line"></div>
+        </div>
+        <div class="icon-container">
+            <a href="/auth/facebook"><i class="bi bi-facebook"></i></a>
+            <a href="/auth/google"><i class="bi bi-google"></i></a>
+        </div>
+        <button type="submit" class="btn btn-secondary login-button">Sign Up</button>
+        <p class="account-notice">Already have an Account? <span class="switch sw-login">Log In</span> instead</p>
+    </form>
+</div>
+
+
+
+<%-include("partials/footer")%>
