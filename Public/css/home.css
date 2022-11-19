@@ -2,26 +2,24 @@
     border: solid white 1px
 } */
 
-:root {
-    --main: #2C3333;
-    --second: #3F4E4F;
-    --light: #F1F1F1;
-    --ubuntu: "Ubuntu", sans-serif;
-} 
-
-
 /* Logo and Navigation */
 body {
     padding: 0px 8px;
-    background-color: var(--main);
+    background-color: #2C3333;
     font-family: "Ubuntu", sans-serif;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
+
+body::-webkit-scrollbar {
+    display: none;
+  }
 
 .logo {
     font-family: "Alfa Slab One", serif;
-    font-size: 16px;
+    font-size: 24px;
     display: inline;
-    color: var(--light);
+    color: #F1F1F1;
 }
 
 .top-nav {
@@ -33,9 +31,9 @@ body {
 
 .bi-list {
     display: inline;
-    width: 20;
+    font-size: 24px;
     height: 13;
-    color: var(--light);
+    color: #F1F1F1;
 }
 
 p {
@@ -45,8 +43,8 @@ p {
 }
 
 .offcanvas {
-    background-color: var(--second);
-    color: var(--light);
+    background-color: #3F4E4F;
+    color: #F1F1F1;
 }
 
 /* Carousel */
@@ -103,12 +101,12 @@ p {
 
 /* Content Books */
  .category-name {
-    color: var(--light);
+    color: #F1F1F1;
     font-family: "Ubuntu", sans-serif;
-    padding: 0;
     margin-top: 16px;
     margin-bottom: 8px;
-    font-size: 32px;
+    padding: 0;
+    font-size: 24px;
 }
 
 
@@ -118,12 +116,12 @@ p {
     padding: 8px;
     margin: auto;
     opacity: 1 !important;
-    height: 230px;
+    height: 220px;
 }
 
 .book{
     background-color: #3F4E4F;
-    border: var(--light) 1px solid;
+    border: #F1F1F1 1px solid;
     margin: 16px;
     transition: all 0.3s;
 }
@@ -141,11 +139,11 @@ p {
 }
 
 .card-title {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .card-volume {
-    font-size: 8px;
+    font-size: 10px;
 }
 
 .book:hover {
@@ -194,7 +192,7 @@ li {
     width: 100%;
     padding: 8px 4px;
     list-style: none;
-    font-size: 24px;
+    font-size: 16px;
     border-top:#F1F1F1 2px solid ;
 }
 
@@ -233,7 +231,6 @@ li:hover{
 }
 
 .hide-input{
-    opacity: 0;
     visibility: hidden;
 }
 
@@ -376,7 +373,6 @@ button:hover {
 
 /* Log-in */
 .account-page-container{
-    visibility: hidden;
     position: absolute;
     top: 32px;
     margin-left: auto;
@@ -392,6 +388,10 @@ button:hover {
     font-family: "Ubunty", sans-serif;
     width: 90%;
     z-index: 1;
+}
+
+.login-page, .signup-page{
+    visibility: hidden;
 }
 
 .account-page-container i{
@@ -468,6 +468,214 @@ button:hover {
     font-size: 32px;
 }
 
+.profile-picture{
+    width: 200px;
+    height: 200px;
+    image-rendering: -webkit-optimize-contrast
+}
+
+.center-container{
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    margin: auto;
+    color: #F1F1F1;
+}
+
+.horizontal-collection{
+    border: #F1F1F1 solid 0.5px;
+    display: flex;
+    flex: row;
+    padding: 16px;
+    margin-top: 16px;
+    background-color: #3F4E4F;
+}
+
+.horizontal-thumbnail{
+    max-height: 230px;
+    min-width: 160px;
+    max-width: 170px;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.horizontal-text-container{
+    padding-left: 16px;
+    color: #F1F1F1;
+    width: 100%;
+}
+
+.meta-horizontal{
+    font-size: 16px;
+    padding-top: 8px;
+}
+
+.horizontal-controls{
+    color: #F1F1F1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.horizontal-icon{
+    font-size: 24px;
+}
+
+.yes-no-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirmation{
+    padding-top: 16px;
+    width: 300px;
+    opacity: 0;
+    /* visibility: hidden; */
+    position: fixed;
+}
+
+.stop-scrolling{
+    height: 100%;
+    overflow: hidden;
+}
+
+.bi-check-square-fill{
+    color: rgb(6, 85, 6);
+}
+
+.bi-x-square-fill{
+    color: rgb(139, 4, 4);
+}
+
+.search-bar{
+    margin: 16px 16px;
+    display: flex;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #E2DCC8;
+}
+
+.search-input{
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.searched-image{
+    margin: 8px auto;
+    max-height: 250px;
+    width: 90%;
+}
+
+.pagination-container{
+    color: #F1F1F1;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.pagination-number{
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: #222828 solid 0.5px;
+    background-color: #222828;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.controller{
+    width: auto;
+    padding: 4px;
+}
+
+.pagination-number:hover{
+    scale: 110%;
+    transform: rotate(15deg);
+    transition-duration: 0.2s;
+    /* border: #E2DCC8 solid; */
+}
+
+.pagination-container ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-container ul li{
+    border: none;
+    width: fit-content;
+}
+
+.hidden{
+    visibility: hidden;
+    width: 0;
+}
+
+.button-active{
+    background-color: #E2DCC8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    color: #222828;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.change-profile-container {
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.change-profile-btn {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #22282866;
+    scale: 110%;
+
+}
+
+.warning-container {
+    margin: auto;
+    background-color: #E2DCC8 !important;
+}
+
+.return-btn {
+    margin-top: 16px;
+}
+
+.warning-container-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 @media (min-width: 481px) {
     .image_head {
@@ -481,7 +689,9 @@ button:hover {
     .hide-if-large{
         display: inherit;
     }
-
+    .category-name{
+        margin-top: 18px;
+    }
 }
 
 @media (min-width: 670px) {
@@ -539,7 +749,7 @@ button:hover {
     
     .entry-image {
         width: 100%;
-        height: 250px;
+        height: 220px;
     }
 
     .meta-value, .item-title {
@@ -560,6 +770,11 @@ button:hover {
 
     .hide-if-small{
         display: inline;
+    }
+
+    .grid-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
@@ -601,7 +816,8 @@ button:hover {
         align-items: center;
     }
 
-
-
-
+    .grid-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
 }

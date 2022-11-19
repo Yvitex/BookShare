@@ -9,17 +9,24 @@ function authGoogle(passport, User, findOrCreate){
         callbackURL: "http://localhost:3000/auth/google/home",
     }, 
     function(accessToken, refreshToken, profile, cb){
+        // console.log("Profile url: " + profile._json.image.url.replace("?sz=50", ""));
+        console.log("Direct Profile: " + profile._json["picture"]);
+        console.log("Object: " + profile)
         User.findOrCreate(
                 {
                     googleId: profile.id, 
                     username: profile.displayName, 
-                    profileImage: profile._json.picture,
                     email: profile.emails[0].value,
                 }, 
-                function(err, user){
-                    console.log("****")
-                    console.log(user);
-                    console.log("****")
+                async function(err, user){
+                    const image = await User.findOne({googleId: profile.id});
+                    if(!image.profileImage){
+                        User.updateOne({googleId: profile.id}, {profileImage: profile._json["picture"]}, function(err){
+                            if(err){
+                            console.log(err)
+                        }
+                    })
+                    }
                     return cb(err, user);
         });
     }

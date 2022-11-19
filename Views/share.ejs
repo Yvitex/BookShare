@@ -1,7 +1,7 @@
 <%- include("partials/header") %>
 
 
-<form action="/submitBook" class="form-container" method="post" enctype="multipart/form-data">
+<form action="<%=bookDetail ? '/updateBook/' + bookDetail._id : '/submitBook'%>" class="form-container" method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
             <div class="col col-12 col-lg-7">
@@ -13,6 +13,7 @@
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
                     name="bookTitle"
+                    value="<%= bookDetail ? bookDetail.title.toUpperCase() : ''%>"
                     required
                     />
                 </div>
@@ -27,6 +28,7 @@
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
                     name="authorName"
+                    value="<%= bookDetail ? bookDetail.author : ''%>"
                     required
                     />
                 </div>  
@@ -41,6 +43,7 @@
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
                     name="downloadLink"
+                    value="<%= bookDetail ? bookDetail.downloadLink : ''%>"
                     required
                     />
                 </div>
@@ -55,6 +58,7 @@
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
                     name="volumeNumber"
+                    value="<%= bookDetail ? bookDetail.volume : ''%>"
                     required
                     />
                 </div>
@@ -63,14 +67,18 @@
             <div class="col col-12 col-lg-7">
                 <h3 class="input-name">Summary</h3>
                 <div class="input-group mb-3">
-                    <textarea name="summaryDescription" class="form-control user-input" rows="10" aria-label="With textarea"></textarea>
+                    <textarea name="summaryDescription" 
+                        class="form-control user-input" 
+                        rows="10" 
+                        aria-label="With textarea"
+                        ><%= bookDetail ? bookDetail.summary.trim(): ''%></textarea>
                 </div>
             </div>
 
             <div class="col col-12 col-lg-5">
                 <h3 class="input-name">Cover Photo</h3>
                 <div class="input-group mb-3">
-                    <input type="file" id="upload" name="bookCover" required hidden/>
+                    <input type="file" id="upload" name="bookCover" hidden/>
                     <label for="upload" class="button-upload">Upload Cover</label>
                 </div>
 

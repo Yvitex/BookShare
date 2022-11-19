@@ -1,4 +1,5 @@
 const multer = require('multer')
+const fs = require("fs")
 
 class Upload{
     constructor(destination){
@@ -27,11 +28,19 @@ class Upload{
             }
         })
     }
-
-
-
 }
 
-module.exports = Upload;
+function removeImage(imageName){
+    fs.unlink("./Public" + imageName, function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("file removed.")
+        }
+    });
+}
+
+module.exports = {Upload, removeImage};
 
 

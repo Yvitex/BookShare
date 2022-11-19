@@ -17,7 +17,7 @@
 <body>
     <!-- Top Most Component -->
     <div class="top-nav">
-        <p class="logo">BookShare</p>
+        <a href="/"><p class="logo">BookShare</p></a>
         <i class="bi bi-list" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"></i>
     </div>
 
@@ -31,6 +31,8 @@
             <ul>
                 <a href="/"><li>Home</li></a>
                 <a href="/share"><li>Share a Book</li></a>
+                <a href="/browse/all/1/25"><li>Browse</li></a>
+                <a href="/profile/<%=currentUser%>"><li>Profile</li></a>
                 <a href="/logout"><li>Log-Out</li></a>
             </ul>
         </div>

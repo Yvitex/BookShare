@@ -8,12 +8,13 @@ function registerUser(username, email, password, userModel, response, request, p
     const newUser = new userModel({
         username: username,
         email: email,
+        profileImage: "/Images/blank_profile.png"
     })
 
     userModel.register(newUser, password, function(err, result){
         if(err){
             console.log(err);
-            response.redirect("/landing")
+            response.redirect("/error-profile")
         }
         else{
             passport.authenticate('local')(request, response, function(){

@@ -13,12 +13,19 @@ function facebookAuth(passport, User, findOrCreate){
             facebookId: profile.id,
             username: profile.displayName, 
             email: profile.emails[0].value,
-            profileImage: "https://graph.facebook.com/" + profile.id + "/picture?width=200&height=200&access_token=" + process.env.FB_ACCESS_TOKEN
           }, 
-          function (err, user) {
-            console.log("****")
-            console.log(user)
-            console.log("****")
+          async function (err, user) {
+            const image = await User.findOne({facebookId: profile.id});
+            
+            if(!image.profileImage){
+              console.log("true")
+              User.updateOne({facebookId: profile.id}, {profileImage: "https://graph.facebook.com/" + profile.id + "/picture?width=200&height=200&access_token=" + accessToken}, function(err){
+                if(err){
+                  console.log(err)
+                }
+              })
+            }
+
             return cb(err, user);
         });
       }

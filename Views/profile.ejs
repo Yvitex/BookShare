@@ -1,0 +1,73 @@
+<%-include("partials/header")%>
+
+<div class="center-container">
+    <div class="change-profile-container">
+        <form action="/update-profile" method="post">
+            <img class="profile-picture" src="<%=currentUser.profileImage%>" alt="">
+            <input id="profile-file" name="profilePicture" type="file" class="hidden">
+            <label for="profile-file" class="change-profile-btn">Change Profile</label>
+            <!-- <button type="submit" class="change-profile-btn"></button> -->
+        </form>
+    </div>
+    <h1 class="item-title"> <%=currentUser.username%> </h1>
+    <p class="meta-value"><%= currentUser.email %> </p>
+</div>
+
+<div id="refresh">
+    <h1 class="category-name">Shared Books</h1>
+    <% userBooks.forEach(function(data){ %>
+    <div class="horizontal-collection" >
+        <img class="horizontal-thumbnail" src="/uploads/images/<%=data.image%>" alt="">
+        <div class="horizontal-text-container">
+            <a href="/item/<%=data._id%>">
+            <h3><%= data.title.length > 50 ? data.title.slice(0 , 50).toUpperCase() + "..." : data.title.toUpperCase() %></h3>
+            </a>
+            <p class="meta-horizontal"> <span class="meta-name">Vol:</span>  <%= data.volume %></p>
+            <p class="meta-horizontal"><span class="meta-name">Author:</span>  <%=data.author %></p>
+            <p class="meta-horizontal"><span class="meta-name">Uploader:</span>  <%=data.uploader %></p>
+            <p class="meta-horizontal"><span class="meta-name">Last Updated:</span>  <%=data.updatedAt.toLocaleDateString("en-US") %> </p>
+            <p class="meta-horizontal"><span class="meta-name">Rating:</span></p>
+        </div>
+        
+        <div class="horizontal-controls">
+            <a href="/edit/<%=data._id%>"><i class="bi bi-pencil-square horizontal-icon"></i></a>
+            <i id="<%=data._id%>" class="bi bi-trash-fill horizontal-icon"></i>
+        </div>
+    </div>
+
+    <div class="account-page-container confirmation">
+        <h3>Warning</h3>
+        <p>Are you sure you want to delete this item?</p>
+        <div class="yes-no-container">
+            <i class="bi bi-x-square-fill"></i>
+            <i class="bi bi-check-square-fill"></i>
+        </div>
+    </div>
+
+    <% }); %>
+</div>
+
+
+
+
+<script>
+    const fileField = document.querySelector("#profile-file");
+    fileField.addEventListener("change", async function(){
+    console.log("Change")
+    const formData = new FormData();
+    formData.append("profilePicture", fileField.files[0]);
+    console.log("Fetct")
+    console.log(formData);
+    fetch("/change-profile-container", {method: "POST", body: formData})
+    .then((response) => response.json())
+    .then((result) => {
+        console.log('Success:', result);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    })
+    
+    setTimeout(() => location.reload(), 500);
+})
+</script>
+<%-include("partials/footer")%>

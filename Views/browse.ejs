@@ -1,0 +1,45 @@
+<%- include("partials/header") %>
+<div class="search-bar">
+    <input id="search" type="text" class="search-input">
+    <div id="search-button">
+        <i class="bi bi-search"></i>
+    </div>
+    <!-- <i class="bi bi-search"></i> -->
+</div>
+
+<h1 class="category-name">Browse Field Result: <span id="total"><%= totalBooks%></span></h1>
+<p class="hidden" id="currentPage"><%=active%></p>
+<p class="hidden" id="previousSearch"><%=regex%></p>
+<div class="grid-container" id="browse-container">
+    <%bookResult.forEach((data) => {%>
+    <a href="/item/<%=data._id%>" class="card-link">
+    <div class="card book">
+        <img class="searched-image" src="/uploads/images/<%=data.image%>" alt="">
+        
+        <div class="card-body book-data">
+            <h5 class="card-title no-hover"><%=data.title.length > 15 ? data.title.slice(0 , 15).toUpperCase() + "..." : data.title.toUpperCase()%></h5>
+            <p class="card-text card-volume no-hover">Vol: <%=data.volume%></p>
+        </div>
+    </div>
+    </a>
+    <%})%>
+</div>
+
+<div class="pagination-container">
+    <ul>
+        <!-- <li>
+            <div class="pagination-number controller"><i class="bi bi-chevron-left"></i>Prev</div>
+        </li>
+        <li><div class="pagination-number">1</div></li>
+        <li><div class="pagination-number">3</div></li>
+        <li><div class="pagination-number">...</div></li>
+        <li><div class="pagination-number">1</div></li>
+        <li><div class="pagination-number">3</div></li>
+        <li><div class="pagination-number">...</div></li>
+        <li>
+            <div class="pagination-number controller"><i class="bi bi-chevron-right"></i>Next</div>
+        </li> -->
+    </ul>
+</div>
+
+<%- include("partials/footer") %>

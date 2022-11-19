@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const fs = require("fs")
 
 function initBookDB(){
     mongoose.connect(process.env.DATABASE)
@@ -60,6 +61,7 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
                 }
                 else{
                     console.log(err);
+                    response.redirect("/share")
                 }
             })
         }
@@ -67,7 +69,75 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
     )
 }
 
+async function findBookDetails(id, Book){
+    let bookDetail = await Book.findById(id)
+    return bookDetail;
+}
+
+async function imageFetch(bookId, Book) { 
+    let data = await Book.findById(bookId);
+    return data;
+}
+
+function updateBook(id, title, author, downloadLink, volume, summary, image, Book, res){
+    Book.findByIdAndUpdate(id, {
+        title: title, 
+        author: author, 
+        downloadLink: downloadLink, 
+        volume: volume, 
+        summary: summary, 
+        image: image
+    }, function(err){
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log("updated")
+                res.redirect("/");
+            }
+        })
+}
+
+async function deleteBook(id, Book, res){
+    // const prevImage = await Book.findById(id)
+    Book.findByIdAndDelete(id, function(err, result){
+        if(err){
+            console.log(err);
+        }
+        else{
+            fs.unlink("./Public/uploads/images/" + result.image, function(err){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log("file removed. ")
+                }
+            });
+            console.log(result)
+            console.log("Book deleted");
+            res.redirect("back")
+        }
+    })
+}
+
+function pushNewBook(User, username, Book){
+    User.updateOne({username: username}, {$push: {uploadedBooks: [Book._id]}} ,function(err, resultUser){
+        if(err){
+            console.log("ERRRR")
+            console.log(err)
+        }
+        else{
+            console.log("No err")
+        }
+    })
+}
+
 module.exports = {
     initBookDB,
     postBook,
+    findBookDetails,
+    imageFetch,
+    updateBook,
+    deleteBook,
+    pushNewBook
 }
