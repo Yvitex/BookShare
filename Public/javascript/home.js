@@ -30,13 +30,15 @@ gsap.timeline()
         opacity: 0
     })
 
+    
 gsap.from(".box2", {
     y:"100px", stagger: 0.3, opacity: 0, duration:1.4, ease: "Back.easeOut",
     scrollTrigger: {
         trigger: ".box2",
         start: "top 75%"
     }
-})
+}
+)
 
 
 // Sign Up and Log In Animation
@@ -183,6 +185,7 @@ function element(page, totalPage){
 }
 
 element(page + 1, Math.ceil(totalPage / limit));
+
 
 
 

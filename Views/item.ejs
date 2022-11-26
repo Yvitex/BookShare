@@ -17,7 +17,7 @@
                 <p class="meta-value"><span class="meta-name">Volume: </span> <%= itemInfo.volume %> </p>
                 <p class="meta-value"><span class="meta-name">Author: </span><%= itemInfo.author %></p>
                 <p class="meta-value"><span class="meta-name">Date Shared: </span><%= itemInfo.createdAt.toLocaleDateString("en-US") %></p>
-                <p class="meta-value"><span class="meta-name">Shared by: </span><%=itemInfo.uploader %></p>
+                <p class="meta-value"><span class="meta-name">Shared by: </span><a href="/visit/<%=uploader%>"><%=itemInfo.uploader %></a></p>
                 <p class="meta-value"><span class="meta-name">Rating: </span><%= %> None</p>
                 <p class="meta-value"><span class="meta-name">Downloads: </span><%= itemInfo.meta.downloads %></p>
             </div>
@@ -57,6 +57,43 @@
     <p class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore magni, exercitationem accusantium itaque unde quisquam, consequuntur, eum soluta dolorem optio excepturi odio totam asperiores reprehenderit voluptatibus fuga distinctio repellat expedita!</p>
 </div>
 
+<div class="comment-section">
+        <h1 class="category-name">Comments</h1>
+        <form action="/comment" method="post">
+            <div class="comment-input-container">
+                <img class="comment-profile" src="<%=user.profileImage%>" alt="Your Profile">
+                <input type="text" name="currentBook" value="<%=itemInfo._id%>" class="hidden">
+                <textarea name="commentData" class="form-control comment-input" rows="2" id="exampleFormControlTextarea1" ></textarea>
+                <button type="submit" class="btn btn-primary send-comment">Send <i class="bi bi-send"></i></button>
+            </div>
+        </form>
+        <% for(let i = comments.length - 1; i >= 0; i--){%> 
+            <div class="comment-input-container prev-comment">
+                <img src="<%=commentors[i].profileImage%>" class="comment-profile" alt="Commentor Profile">
+                <div class="text-comment">
+                    <div class="name-time">
+                        <h4><%=commentors[i].username%></h3>
+                        <p><%=comments[i].time.toLocaleDateString("en-US")%></p>
+                    </div>
+                    
+                    <p class="commentor-says"><%=comments[i].message%></p>
+                </div>
+            </div>
+            <%}%>
+</div>
+
+<script>
+    const textarea = document.querySelector(".comment-input");
+    console.log(textarea)
+
+    textarea.addEventListener("input", e => {
+        textarea.style.height = "auto";
+        let height = e.target.scrollHeight;
+        console.log(height)
+        textarea.style.height = height + "px";
+    })
+
+</script>
 <%- include("partials/footer") %>
 
 

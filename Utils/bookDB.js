@@ -1,12 +1,8 @@
 const mongoose = require("mongoose")
 const fs = require("fs")
+const {removeImage} = require("../Utils/upload")
 
 function initBookDB(){
-    mongoose.connect(process.env.DATABASE)
-    .then(() => {
-        console.log("Connected to myLibrary Database")
-    })
-
     let bookSchema = new mongoose.Schema(
         {
             title: String,
@@ -40,7 +36,8 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
     await bookSchema.findOne({title: bookTitle.toLowerCase(), volume: volumeNumber}).then((data) => {
         if (data != null){
             console.log("already Exist");
-            throw Error;
+            removeImage("/uploads/images/" + imageName);
+            response.redirect("/error-profile");
         }
         else{
             console.log("Creating Book Space")
@@ -51,7 +48,7 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
                 volume: volumeNumber,
                 summary: summaryDescription,
                 image: imageName,
-                uploader: uploader,
+                uploader: uploader.username,
             })
         
             newBook.save(function(error, Book){
@@ -61,7 +58,7 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
                 }
                 else{
                     console.log(err);
-                    response.redirect("/share")
+                    response.redirect("/error-profile")
                 }
             })
         }
@@ -121,7 +118,7 @@ async function deleteBook(id, Book, res){
 }
 
 function pushNewBook(User, username, Book){
-    User.updateOne({username: username}, {$push: {uploadedBooks: [Book._id]}} ,function(err, resultUser){
+    User.updateOne({_id: username._id}, {$push: {uploadedBooks: [Book._id]}} ,function(err, resultUser){
         if(err){
             console.log("ERRRR")
             console.log(err)

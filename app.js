@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const bookDB = require("./Utils/bookDB");
 const userDB = require("./Utils/userDB");
+const commentDB = require("./Utils/commentDB");
 const {Upload, removeImage} = require("./Utils/upload");
 const lmPassport = require("./Utils/localMongoosePassport");
 const passport = require("passport");
@@ -12,7 +13,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 const googlePassport = require("./Utils/Auth/googlePassport");
 const facebookPassport = require("./Utils/Auth/facebookPassport");
+const mongoose = require("mongoose");
 const fs = require("fs");
+const e = require("express");
 
 
 require("dotenv").config();
@@ -33,9 +36,17 @@ app.use(passport.session());
 const Uploader = new Upload("./Public/uploads/images")
 const upload = Uploader.upload
 
+mongoose.connect(process.env.DATABASE)
+.then(() => {
+    console.log("Connected to myLibrary Database")
+})
+
 const TotalBook = bookDB.initBookDB();
 const Book = TotalBook[0];
-const User = userDB.initUserDB(passportLocalMongoose, findOrCreate, TotalBook[1]);
+const User = userDB.initUserDB(passportLocalMongoose, findOrCreate);
+const Commentor = commentDB.initMessageDb();
+const commentSchema = Commentor[1];
+const Comment = Commentor[0];
 
 googlePassport.authGoogle(passport, User, findOrCreate);
 facebookPassport.facebookAuth(passport, User, findOrCreate);
@@ -45,16 +56,22 @@ passport.use(new LocalStrategy(User.authenticate()));
 lmPassport.createLocalStrategy(User, passport);
 
 app.get("/", async function(req, res) {
-    if(req.isAuthenticated()){
-        const currentUser = req.user._id;
-        console.log(currentUser);
-        const latestAdded = await Book.find({}).sort('-createdAt').limit(10);
-        const mostDownloaded = await Book.find({}).sort('-meta.downloads').limit(10);
-        res.render("home", {newBooks: latestAdded, downloadedBooks: mostDownloaded, currentUser: currentUser})
+    try {
+        if(req.isAuthenticated()){
+            const currentUser = req.user._id;
+            console.log(currentUser);
+            const latestAdded = await Book.find({}).sort('-createdAt').limit(10);
+            const mostDownloaded = await Book.find({}).sort('-meta.downloads').limit(10);
+            res.render("home", {newBooks: latestAdded, downloadedBooks: mostDownloaded, currentUser: currentUser})
+        }
+        else{
+            res.redirect("/landing")
+        }
+    } catch (error) {
+        console.log(error);
+        res.render("/error-profile");
     }
-    else{
-        res.redirect("/landing")
-    }
+
     
 })
 
@@ -72,9 +89,34 @@ app.get("/share", function(req, res) {
 
 app.get("/item/:idName", async function(req, res){
     const currentUser = req.user._id;
-    const bookInfo = await Book.findById(req.params.idName);
-    const relatedBooks = await Book.find({title: bookInfo.title});
-    res.render("item", {itemInfo: bookInfo, books: relatedBooks, currentUser: currentUser})
+    const commentorArray = [];
+    try {
+        const bookInfo = await Book.findById(req.params.idName);
+        const uploader = await User.findOne({username: bookInfo.uploader})
+        const relatedBooks = await Book.find({title: bookInfo.title});
+        const comments = await Comment.find({_id: bookInfo.reviews});
+        comments.forEach((data) => {
+            commentorArray.push(data.user);
+        })
+        const commentors = await User.find({_id: commentorArray})
+
+        res.render("item", {
+            itemInfo: bookInfo, 
+            books: relatedBooks, 
+            currentUser: currentUser, 
+            user: req.user, 
+            uploader: uploader._id,
+            commentors: commentors,
+            comments: comments
+        
+        })
+    }
+    catch (error) {
+        console.log(error);
+        res.render("/error-profile");
+    }
+
+    
 })
 
 app.get("/logout", function(req, res){
@@ -105,16 +147,33 @@ app.get('/auth/facebook/home',
   });
 
 app.get("/profile/:profileId", async function(req, res){
-    const books = await Book.find({_id: {$in: req.user.uploadedBooks}})
-    console.log(req.user.uploadedBooks)
-    console.log(books)
-    res.render("profile", {currentUser: req.user, userBooks: books})
+    try {
+        const books = await Book.find({_id: {$in: req.user.uploadedBooks}})
+        res.render("profile", {currentUser: req.user, userBooks: books})
+    } catch (error) {
+        console.log(error);
+        res.render("/error-profile");
+    }
+
 })
 
 app.get("/edit/:bookId", function(req, res){
     bookDB.findBookDetails(req.params.bookId, Book).then((data) => {
         res.render("share", {currentUser: req.user._id, bookDetail: data});
     })
+})
+
+app.get("/visit/:userId", async function(req, res) {
+    const currentUser = req.user._id;
+    try {
+        const user = await User.findById(req.params.userId);
+        const userBooks = await Book.find({_id: {$in: user.uploadedBooks}})
+        res.render("visitor", {user: user, userBooks: userBooks, currentUser: currentUser})
+    } catch (error) {
+        console.log(error);
+        res.render("/error-profile");
+    }
+
 })
 
 // app.get("/browse", async function(req, res){
@@ -130,14 +189,26 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
     const limit = req.params.limit;
     const searchItem = req.params.searchItem;
     if(searchItem == "all"){
-        const totality = await Book.find({});
-        const allBooks = await Book.find({}).sort("title").skip(pageNumber * limit).limit(limit);
-        res.render("browse", {currentUser: user, bookResult: allBooks, totalBooks: totality.length, active: pageNumber, regex: ""});
+        try {
+            const totality = await Book.find({});
+            const allBooks = await Book.find({}).sort("title").skip(pageNumber * limit).limit(limit);
+            res.render("browse", {currentUser: user, bookResult: allBooks, totalBooks: totality.length, active: pageNumber, regex: ""});
+        } catch (error) {
+            console.log(error);
+            res.render("/error-profile");
+        }
+
     }
     else{
-        const totalitySearch = await Book.find({title: {$regex: searchItem, $options: "i"}});
-        const searchedBooks = await Book.find({title: {$regex: searchItem, $options: "i"}}).sort("volume").skip(pageNumber * limit).limit(limit);
-        res.render("browse", {currentUser: user, bookResult: searchedBooks, totalBooks: totalitySearch.length, active: pageNumber, regex: searchItem});
+        try {
+            const totalitySearch = await Book.find({title: {$regex: searchItem, $options: "i"}});
+            const searchedBooks = await Book.find({title: {$regex: searchItem, $options: "i"}}).sort("volume").skip(pageNumber * limit).limit(limit);
+            res.render("browse", {currentUser: user, bookResult: searchedBooks, totalBooks: totalitySearch.length, active: pageNumber, regex: searchItem});
+        } catch (error) {
+            console.log(error);
+            res.render("/error-profile");
+        }
+       
     }
 
 })
@@ -153,7 +224,7 @@ app.post("/submitBook", upload.single("bookCover"), function(req, res){
     const downloadLink = req.body.downloadLink;
     const summaryDescription = req.body.summaryDescription;
     const imageName = req.file? req.file.filename: "jobless_reincarnation_cover.jpg";
-    const uploader = req.user.username;
+    const uploader = req.user;
 
     bookDB.postBook(bookTitle, volumeNumber, authorName, downloadLink, summaryDescription, imageName, Book, res, uploader, bookDB.pushNewBook, User);
 
@@ -164,8 +235,13 @@ app.post("/download", async function(req, res){
     Book.findByIdAndUpdate(id, {$inc: {"meta.downloads": 1}}, {new:true}, function(err, foundBook){
         console.log("Download Updated: " + foundBook.meta.downloads);
       })
-    const bookInfo = await Book.findById(id);
-    res.redirect(bookInfo.downloadLink);
+    try {
+        const bookInfo = await Book.findById(id);
+        res.redirect(bookInfo.downloadLink);
+    } catch (error) {
+        console.log(error);
+    }
+
 })
 
 app.post("/login", passport.authenticate("local",{
@@ -173,6 +249,47 @@ app.post("/login", passport.authenticate("local",{
     failureRedirect: "/error-profile"
 }), function(req, res){ 
 });
+
+app.post("/comment", function(req, res){
+    try {
+        const user = req.user._id;
+        const comment = req.body.commentData;
+        const currentBook = req.body.currentBook;
+        // Book.findByIdAndUpdate(currentBook, 
+        //     {$push: 
+        //         {reviews: [{name: user.username, message: comment, profile: user.profileImage, time: Date.now()}]}}, 
+        //         async function(err){
+        //     if(err){
+        //         console.log(err);
+        //     }
+        //     else{
+        //         let responsive = await Book.findById(currentBook);
+        //         console.log(responsive)
+        //         res.redirect("/item/" + currentBook);
+        //     }
+        // })
+
+        const newComment = new Comment({
+            user: user,
+            message: comment, 
+            time: Date.now()
+        })
+
+        newComment.save(async function(error, comment) {
+            if(!error) {
+                await Book.findByIdAndUpdate(currentBook, {$push: {reviews: [comment._id]}});
+                res.redirect("/item/" + currentBook);
+            }
+            else {
+                console.log(error);
+            }
+        })    
+    } catch (error) {
+        console.log(error);
+    }
+  
+
+})
 
 app.post("/signup", function(req, res, next){
     const username = req.body.username;
@@ -182,28 +299,33 @@ app.post("/signup", function(req, res, next){
 })
 
 app.post("/updateBook/:bookId", upload.single("bookCover"), async function(req, res){
-    const bookId = req.params.bookId;
-    const title = req.body.bookTitle;
-    const author = req.body.authorName;
-    const downloadLink = req.body.downloadLink;
-    const volume = req.body.volumeNumber;
-    const summary = req.body.summaryDescription;
-    let image = undefined;
-    if(req.file){
-        recentImage = await bookDB.imageFetch(bookId, Book);
-        recentImage = recentImage.image;
-        fs.unlink("./Public/uploads/images/"+recentImage, function(err){
-            if(err){
-                console.log(err)
-            }
-            else{
-                console.log("Sucess Deletion: " + recentImage)
-            }
-        });
-        image = req.file.filename;
+    try {
+        const bookId = req.params.bookId;
+        const title = req.body.bookTitle;
+        const author = req.body.authorName;
+        const downloadLink = req.body.downloadLink;
+        const volume = req.body.volumeNumber;
+        const summary = req.body.summaryDescription;
+        let image = undefined;
+        if(req.file){
+            recentImage = await bookDB.imageFetch(bookId, Book);
+            recentImage = recentImage.image;
+            fs.unlink("./Public/uploads/images/"+recentImage, function(err){
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    console.log("Sucess Deletion: " + recentImage)
+                }
+            });
+            image = req.file.filename;
+        }
+    
+        bookDB.updateBook(bookId, title, author, downloadLink, volume, summary, image, Book, res)
+    } catch (error) {
+        console.log(error)
     }
 
-    bookDB.updateBook(bookId, title, author, downloadLink, volume, summary, image, Book, res)
 })
 
 app.delete("/delete/:bookId", function(req, res){
@@ -221,10 +343,15 @@ app.delete("/delete/:bookId", function(req, res){
 })
 
 app.post("/change-profile-container", upload.single("profilePicture"), async function(req, res){
-    const image = req.file.filename;
-    const user = req.user._id;
-    const prevImage = await User.findById(user);
-    userDB.updateProfilePicture(User, removeImage, prevImage, image, req, res)
+    try {
+        const image = req.file.filename;
+        const user = req.user._id;
+        const prevImage = await User.findById(user);
+        userDB.updateProfilePicture(User, removeImage, prevImage, image, req, res)
+    } catch (error) {
+        console.log(error);
+    }
+
 })
 
 app.listen(3000, () => {

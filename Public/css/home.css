@@ -677,6 +677,53 @@ button:hover {
     align-items: center;
 }
 
+.comment-input {
+    width: 90%;
+    display: inline;
+    background-color: #22282877;
+    color: #F1F1F1;
+}
+
+.comment-input:focus {
+    background-color: #2C3333;
+    color: #F1F1F1;
+    outline-color: #E2DCC8;
+}
+
+.comment-section .comment-input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #F1F1F1;
+}
+
+.comment-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 8px;
+}
+
+.send-comment {
+    margin: 8px;
+}
+
+.prev-comment {
+    margin-top: 32px;
+}
+
+footer {
+    height: 100px;
+}
+
+.name-time {
+    display: flex;
+}
+
+.name-time p {
+    margin-left: 16px;
+}
+
 @media (min-width: 481px) {
     .image_head {
         height: 300px;

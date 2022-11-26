@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-function initUserDB(passportLocal, findOrCreate, Book){
+function initUserDB(passportLocal, findOrCreate){
     const userSchema = new mongoose.Schema({
         username: {
             type: String,
@@ -22,23 +22,23 @@ function initUserDB(passportLocal, findOrCreate, Book){
     return User;
 }
 
-function addNewUser(username, email, password, userSchema, response){
-    const newUser = new userSchema({
-        username: username,
-        email: email,
-        password: password,
-    })
+// function addNewUser(username, email, password, userSchema, response){
+//     const newUser = new userSchema({
+//         username: username,
+//         email: email,
+//         password: password,
+//     })
 
-    newUser.save(function(err){
-        if(!err){
-            console.log("Added new User");
-            response.redirect("/");
-        }
-        else{
-            console.log(err)
-        }
-    })
-}
+//     newUser.save(function(err){
+//         if(!err){
+//             console.log("Added new User");
+//             response.redirect("/");
+//         }
+//         else{
+//             console.log(err)
+//         }
+//     })
+// }
 
 function updateProfilePicture(User, removeImage, prevImage, image, req, res){
     User.findByIdAndUpdate(req.user._id, {profileImage: "/uploads/images/" + image}, function(err){
@@ -57,6 +57,6 @@ function updateProfilePicture(User, removeImage, prevImage, image, req, res){
 
 module.exports = {
     initUserDB,
-    addNewUser, 
+    // addNewUser, 
     updateProfilePicture
 };

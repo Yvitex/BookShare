@@ -3,14 +3,11 @@
 <div class="center-container">
     <div class="change-profile-container">
         <form action="/update-profile" method="post">
-            <img class="profile-picture" src="<%=currentUser.profileImage%>" alt="">
-            <input id="profile-file" name="profilePicture" type="file" class="hidden">
-            <label for="profile-file" class="change-profile-btn">Change Profile</label>
-            <!-- <button type="submit" class="change-profile-btn"></button> -->
+            <img class="profile-picture" src="<%=user.profileImage%>" alt="">
         </form>
     </div>
-    <h1 class="item-title"> <%=currentUser.username%> </h1>
-    <p class="meta-value"><%= currentUser.email %> </p>
+    <h1 class="item-title"> <%=user.username%> </h1>
+    <p class="meta-value"><%= user.email %> </p>
 </div>
 
 <div id="refresh">
@@ -27,11 +24,6 @@
             <p class="meta-horizontal"><span class="meta-name">Uploader:</span>  <%=data.uploader %></p>
             <p class="meta-horizontal"><span class="meta-name">Last Updated:</span>  <%=data.updatedAt.toLocaleDateString("en-US") %> </p>
             <p class="meta-horizontal"><span class="meta-name">Rating:</span></p>
-        </div>
-        
-        <div class="horizontal-controls">
-            <a href="/edit/<%=data._id%>"><i class="bi bi-pencil-square horizontal-icon"></i></a>
-            <i id="<%=data._id%>" class="bi bi-trash-fill horizontal-icon"></i>
         </div>
     </div>
 
