@@ -35,7 +35,6 @@ function initBookDB(){
 async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summaryDescription, imageName, bookSchema, response, uploader, pushNewBook, User){
     await bookSchema.findOne({title: bookTitle.toLowerCase(), volume: volumeNumber}).then((data) => {
         if (data != null){
-            console.log("already Exist");
             removeImage("/uploads/images/" + imageName);
             response.redirect("/error-profile");
         }
@@ -57,7 +56,7 @@ async function postBook(bookTitle, volumeNumber, authorName, downloadLink, summa
                     response.redirect("/");
                 }
                 else{
-                    console.log(err);
+                    console.log(error);
                     response.redirect("/error-profile")
                 }
             })
@@ -87,19 +86,19 @@ function updateBook(id, title, author, downloadLink, volume, summary, image, Boo
     }, function(err){
             if(err){
                 console.log(err)
+                res.redirect("/error-profile");
             }
             else{
-                console.log("updated")
                 res.redirect("/");
             }
         })
 }
 
 async function deleteBook(id, Book, res){
-    // const prevImage = await Book.findById(id)
     Book.findByIdAndDelete(id, function(err, result){
         if(err){
             console.log(err);
+            res.redirect("/error-profile")
         }
         else{
             fs.unlink("./Public/uploads/images/" + result.image, function(err){
@@ -110,8 +109,6 @@ async function deleteBook(id, Book, res){
                     console.log("file removed. ")
                 }
             });
-            console.log(result)
-            console.log("Book deleted");
             res.redirect("back")
         }
     })
@@ -120,11 +117,7 @@ async function deleteBook(id, Book, res){
 function pushNewBook(User, username, Book){
     User.updateOne({_id: username._id}, {$push: {uploadedBooks: [Book._id]}} ,function(err, resultUser){
         if(err){
-            console.log("ERRRR")
             console.log(err)
-        }
-        else{
-            console.log("No err")
         }
     })
 }

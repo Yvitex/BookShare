@@ -15,18 +15,22 @@ function facebookAuth(passport, User, findOrCreate){
             email: profile.emails[0].value,
           }, 
           async function (err, user) {
-            const image = await User.findOne({facebookId: profile.id});
+            try {
+              const image = await User.findOne({facebookId: profile.id});
             
-            if(!image.profileImage){
-              console.log("true")
-              User.updateOne({facebookId: profile.id}, {profileImage: "https://graph.facebook.com/" + profile.id + "/picture?width=200&height=200&access_token=" + accessToken}, function(err){
-                if(err){
-                  console.log(err)
-                }
-              })
-            }
-
+              if(!image.profileImage){
+                console.log("true")
+                User.updateOne({facebookId: profile.id}, {profileImage: "https://graph.facebook.com/" + profile.id + "/picture?width=200&height=200&access_token=" + accessToken}, function(err){
+                  if(err){
+                    console.log(err)
+                  }
+                })
+              }
             return cb(err, user);
+            } catch (error) {
+              console.log(error)
+            }
+            
         });
       }
     ));

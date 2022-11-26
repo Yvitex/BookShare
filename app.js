@@ -15,7 +15,6 @@ const googlePassport = require("./Utils/Auth/googlePassport");
 const facebookPassport = require("./Utils/Auth/facebookPassport");
 const mongoose = require("mongoose");
 const fs = require("fs");
-const e = require("express");
 
 
 require("dotenv").config();
@@ -36,7 +35,9 @@ app.use(passport.session());
 const Uploader = new Upload("./Public/uploads/images")
 const upload = Uploader.upload
 
-mongoose.connect(process.env.DATABASE)
+console.log(process.env.ATLAS + "/myLibrary")
+
+mongoose.connect(process.env.DB + "/myLibrary")
 .then(() => {
     console.log("Connected to myLibrary Database")
 })
@@ -44,9 +45,7 @@ mongoose.connect(process.env.DATABASE)
 const TotalBook = bookDB.initBookDB();
 const Book = TotalBook[0];
 const User = userDB.initUserDB(passportLocalMongoose, findOrCreate);
-const Commentor = commentDB.initMessageDb();
-const commentSchema = Commentor[1];
-const Comment = Commentor[0];
+const Comment = commentDB.initMessageDb();
 
 googlePassport.authGoogle(passport, User, findOrCreate);
 facebookPassport.facebookAuth(passport, User, findOrCreate);
@@ -59,7 +58,6 @@ app.get("/", async function(req, res) {
     try {
         if(req.isAuthenticated()){
             const currentUser = req.user._id;
-            console.log(currentUser);
             const latestAdded = await Book.find({}).sort('-createdAt').limit(10);
             const mostDownloaded = await Book.find({}).sort('-meta.downloads').limit(10);
             res.render("home", {newBooks: latestAdded, downloadedBooks: mostDownloaded, currentUser: currentUser})
@@ -90,15 +88,23 @@ app.get("/share", function(req, res) {
 app.get("/item/:idName", async function(req, res){
     const currentUser = req.user._id;
     const commentorArray = [];
+    const commentorResult = [];
     try {
         const bookInfo = await Book.findById(req.params.idName);
         const uploader = await User.findOne({username: bookInfo.uploader})
         const relatedBooks = await Book.find({title: bookInfo.title});
         const comments = await Comment.find({_id: bookInfo.reviews});
+        
         comments.forEach((data) => {
             commentorArray.push(data.user);
         })
-        const commentors = await User.find({_id: commentorArray})
+
+        if(commentorArray) {
+            for(let i = 0; i < commentorArray.length && i < 30; i++) {
+                let data = await User.find({_id: commentorArray[i]});
+                commentorResult.push(data);
+            }
+        }
 
         res.render("item", {
             itemInfo: bookInfo, 
@@ -106,14 +112,17 @@ app.get("/item/:idName", async function(req, res){
             currentUser: currentUser, 
             user: req.user, 
             uploader: uploader._id,
-            commentors: commentors,
+            commentors: commentorResult,
             comments: comments
         
         })
+        
+
+        
     }
     catch (error) {
         console.log(error);
-        res.render("/error-profile");
+        res.redirect("/error-profile");
     }
 
     
@@ -171,17 +180,10 @@ app.get("/visit/:userId", async function(req, res) {
         res.render("visitor", {user: user, userBooks: userBooks, currentUser: currentUser})
     } catch (error) {
         console.log(error);
-        res.render("/error-profile");
+        res.redirect("/error-profile");;
     }
 
 })
-
-// app.get("/browse", async function(req, res){
-//     const user = req.user._id;
-//     const allBooks = await Book.find({}).sort("title").limit(25);
-
-//     res.render("browse", {currentUser: user, bookResult: allBooks});
-// })
 
 app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
     const user = req.user._id;
@@ -195,7 +197,7 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
             res.render("browse", {currentUser: user, bookResult: allBooks, totalBooks: totality.length, active: pageNumber, regex: ""});
         } catch (error) {
             console.log(error);
-            res.render("/error-profile");
+            res.redirect("/error-profile");
         }
 
     }
@@ -206,7 +208,7 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
             res.render("browse", {currentUser: user, bookResult: searchedBooks, totalBooks: totalitySearch.length, active: pageNumber, regex: searchItem});
         } catch (error) {
             console.log(error);
-            res.render("/error-profile");
+            res.redirect("/error-profile");
         }
        
     }
@@ -255,19 +257,6 @@ app.post("/comment", function(req, res){
         const user = req.user._id;
         const comment = req.body.commentData;
         const currentBook = req.body.currentBook;
-        // Book.findByIdAndUpdate(currentBook, 
-        //     {$push: 
-        //         {reviews: [{name: user.username, message: comment, profile: user.profileImage, time: Date.now()}]}}, 
-        //         async function(err){
-        //     if(err){
-        //         console.log(err);
-        //     }
-        //     else{
-        //         let responsive = await Book.findById(currentBook);
-        //         console.log(responsive)
-        //         res.redirect("/item/" + currentBook);
-        //     }
-        // })
 
         const newComment = new Comment({
             user: user,
@@ -324,6 +313,7 @@ app.post("/updateBook/:bookId", upload.single("bookCover"), async function(req, 
         bookDB.updateBook(bookId, title, author, downloadLink, volume, summary, image, Book, res)
     } catch (error) {
         console.log(error)
+        res.redirect("/error-profile");
     }
 
 })

@@ -8,7 +8,7 @@ function initMessageDb() {
     })
 
     const Comment = mongoose.model("Comment", CommentSchema);
-    return [Comment, CommentSchema];
+    return Comment;
 }
 
 module.exports = {
