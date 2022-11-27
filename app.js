@@ -40,6 +40,8 @@ console.log(path.join(__dirname, "Public"));
 
 const Uploader = new Upload("./Public/uploads/images");
 const upload = Uploader.upload;
+// Um Hello, in case you don't remember, please switch the database to local when using localhost
+// Simple change ATLAS to DB
 const DATABASE = process.env.ATLAS;
 
 console.log(DATABASE + "/myLibrary")
