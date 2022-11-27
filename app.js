@@ -31,6 +31,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('views', __dirname + '/views');
+
 
 const Uploader = new Upload("./Public/uploads/images");
 const upload = Uploader.upload;
