@@ -63,14 +63,14 @@ app.get("/", async function(req, res) {
             const currentUser = req.user._id;
             const latestAdded = await Book.find({}).sort('-createdAt').limit(10);
             const mostDownloaded = await Book.find({}).sort('-meta.downloads').limit(10);
-            res.render("home", {newBooks: latestAdded, downloadedBooks: mostDownloaded, currentUser: currentUser})
+            res.render("home.ejs", {newBooks: latestAdded, downloadedBooks: mostDownloaded, currentUser: currentUser})
         }
         else{
             res.redirect("/landing")
         }
     } catch (error) {
         console.log(error);
-        res.render("/error-profile");
+        res.redirect("/error-profile");
     }
 
     
@@ -80,12 +80,12 @@ app.get("/landing", function(req, res){
     if(req.isAuthenticated()){
         res.redirect("/")
     }
-    res.render("landing")
+    res.render("landing.ejs")
 })
 
 app.get("/share", function(req, res) {
     const currentUser = req.user._id;
-    res.render("share", {currentUser: currentUser, bookDetail: null});
+    res.render("share.ejs", {currentUser: currentUser, bookDetail: null});
 })
 
 app.get("/item/:idName", async function(req, res){
@@ -109,7 +109,7 @@ app.get("/item/:idName", async function(req, res){
             }
         }
 
-        res.render("item", {
+        res.render("item.ejs", {
             itemInfo: bookInfo, 
             books: relatedBooks, 
             currentUser: currentUser, 
@@ -161,17 +161,17 @@ app.get('/auth/facebook/home',
 app.get("/profile/:profileId", async function(req, res){
     try {
         const books = await Book.find({_id: {$in: req.user.uploadedBooks}})
-        res.render("profile", {currentUser: req.user, userBooks: books})
+        res.render("profile.ejs", {currentUser: req.user, userBooks: books})
     } catch (error) {
         console.log(error);
-        res.render("/error-profile");
+        res.redirect("/error-profile.ejs");
     }
 
 })
 
 app.get("/edit/:bookId", function(req, res){
     bookDB.findBookDetails(req.params.bookId, Book).then((data) => {
-        res.render("share", {currentUser: req.user._id, bookDetail: data});
+        res.render("share.ejs", {currentUser: req.user._id, bookDetail: data});
     })
 })
 
@@ -180,7 +180,7 @@ app.get("/visit/:userId", async function(req, res) {
     try {
         const user = await User.findById(req.params.userId);
         const userBooks = await Book.find({_id: {$in: user.uploadedBooks}})
-        res.render("visitor", {user: user, userBooks: userBooks, currentUser: currentUser})
+        res.render("visitor.ejs", {user: user, userBooks: userBooks, currentUser: currentUser})
     } catch (error) {
         console.log(error);
         res.redirect("/error-profile");;
@@ -197,7 +197,7 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
         try {
             const totality = await Book.find({});
             const allBooks = await Book.find({}).sort("title").skip(pageNumber * limit).limit(limit);
-            res.render("browse", {currentUser: user, bookResult: allBooks, totalBooks: totality.length, active: pageNumber, regex: ""});
+            res.render("browse.ejs", {currentUser: user, bookResult: allBooks, totalBooks: totality.length, active: pageNumber, regex: ""});
         } catch (error) {
             console.log(error);
             res.redirect("/error-profile");
@@ -208,7 +208,7 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
         try {
             const totalitySearch = await Book.find({title: {$regex: searchItem, $options: "i"}});
             const searchedBooks = await Book.find({title: {$regex: searchItem, $options: "i"}}).sort("volume").skip(pageNumber * limit).limit(limit);
-            res.render("browse", {currentUser: user, bookResult: searchedBooks, totalBooks: totalitySearch.length, active: pageNumber, regex: searchItem});
+            res.render("browse.ejs", {currentUser: user, bookResult: searchedBooks, totalBooks: totalitySearch.length, active: pageNumber, regex: searchItem});
         } catch (error) {
             console.log(error);
             res.redirect("/error-profile");
@@ -219,7 +219,7 @@ app.get("/browse/:searchItem/:pageNumber/:limit", async function(req, res){
 })
 
 app.get("/error-profile", function(req, res){
-    res.render("profileError")
+    res.render("profileError.ejs")
 })
 
 app.post("/submitBook", upload.single("bookCover"), function(req, res){
