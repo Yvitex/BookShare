@@ -15,11 +15,12 @@ const googlePassport = require("./Utils/Auth/googlePassport");
 const facebookPassport = require("./Utils/Auth/facebookPassport");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const path = require("path");
 
 
 require("dotenv").config();
 
-app.use(express.static("public"))
+app.use(express.static(path.join(__dirname, "Public")));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs")
 
@@ -31,7 +32,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, "views"));
+
+console.log(path.join(__dirname, "views"));
+console.log(path.join(__dirname, "Public"));
 
 
 const Uploader = new Upload("./Public/uploads/images");
