@@ -32,14 +32,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-const Uploader = new Upload("./Public/uploads/images")
-const upload = Uploader.upload
+const Uploader = new Upload("./Public/uploads/images");
+const upload = Uploader.upload;
+const DATABASE = process.env.ATLAS;
 
-console.log(process.env.ATLAS + "/myLibrary")
+console.log(DATABASE + "/myLibrary")
 
-mongoose.connect(process.env.DB + "/myLibrary")
+mongoose.connect(DATABASE + "/myLibrary")
 .then(() => {
-    console.log("Connected to myLibrary Database")
+    console.log("Connected to myLibrary Database in " + DATABASE);
 })
 
 const TotalBook = bookDB.initBookDB();
@@ -344,7 +345,9 @@ app.post("/change-profile-container", upload.single("profilePicture"), async fun
 
 })
 
-app.listen(3000, () => {
-    console.log("Connected to Port 3000")
+const PORT = process.env.PORT || 3000
+
+app.listen( PORT, () => {
+    console.log("Connected to " + PORT);
 })
 
