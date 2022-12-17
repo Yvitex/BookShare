@@ -20,11 +20,11 @@
         <img class="horizontal-thumbnail" src="/uploads/images/<%=data.image%>" alt="">
         <div class="horizontal-text-container">
             <a href="/item/<%=data._id%>">
-            <h3><%= data.title.length > 50 ? data.title.slice(0 , 50).toUpperCase() + "..." : data.title.toUpperCase() %></h3>
+            <h3 class="title-horizontal"><%= data.title.length > 20 ? data.title.slice(0 , 20).toUpperCase() + "..." : data.title.toUpperCase() %></h3>
             </a>
             <p class="meta-horizontal"> <span class="meta-name">Vol:</span>  <%= data.volume %></p>
             <p class="meta-horizontal"><span class="meta-name">Author:</span>  <%=data.author %></p>
-            <p class="meta-horizontal"><span class="meta-name">Uploader:</span>  <%=data.uploader %></p>
+            <p class="meta-horizontal"><span class="meta-name">Uploader:</span>  <%=data.uploader.length > 20 ? data.uploader.slice(0, 20) + "..." : data.uploader %></p>
             <p class="meta-horizontal"><span class="meta-name">Last Updated:</span>  <%=data.updatedAt.toLocaleDateString("en-US") %> </p>
             <p class="meta-horizontal"><span class="meta-name">Rating:</span></p>
         </div>

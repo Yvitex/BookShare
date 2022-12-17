@@ -124,6 +124,13 @@ searchBar.addEventListener("input", (event) => {
     searchBarContainer.innerHTML = `<a href="/browse/${searchKey}/1/${limit}"><i class="bi bi-search"></i></a>`
 })
 
+searchBar.addEventListener("keypress", function (event){
+    if (event.key === "Enter") {
+        event.preventDefault();
+        location.href = `/browse/${searchKey}/1/${limit}`;
+    }
+})
+
 
 
 

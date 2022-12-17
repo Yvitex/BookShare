@@ -42,7 +42,7 @@ const Uploader = new Upload("./Public/uploads/images");
 const upload = Uploader.upload;
 // Um Hello, in case you don't remember, please switch the database to local when using localhost
 // Simple change ATLAS to DB
-const DATABASE = process.env.ATLAS;
+const DATABASE = process.env.DB;
 
 console.log(DATABASE + "/myLibrary")
 
@@ -250,7 +250,7 @@ app.post("/download", async function(req, res){
         const bookInfo = await Book.findById(id);
         res.redirect(bookInfo.downloadLink);
     } catch (error) {
-        console.log(error);
+        res.json({message: "An Error has Occured", error: error.message});
     }
 
 })
