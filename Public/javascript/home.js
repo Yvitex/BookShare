@@ -72,7 +72,6 @@ $(".close-signup").click(()=> {
 let id = null;
 
 $(".bi-trash-fill").click((event) => {
-    console.log(event.currentTarget.id)
     id = event.currentTarget.id
     gsap.set(".confirmation", {autoAlpha: 1});
     gsap.fromTo(".confirmation", {y: -100, opacity: 0}, {y: 10, opacity: 1, duration: 0.2});
@@ -92,10 +91,8 @@ $(".bi-check-square-fill").click(function(){
 })
 
 $(".change-profile-btn").hover(function() {
-    console.log("in")
     gsap.fromTo(".change-profile-btn", {opacity: 0}, {opacity: 1, duration: 0.2})
 }, function() {
-    console.log("out")
     gsap.fromTo(".change-profile-btn",{opacity: 1, duration: 0.2}, {opacity: 0});
 })
 
@@ -121,13 +118,13 @@ if (previousSearch == ""){
 
 searchBar.addEventListener("input", (event) => {
     searchKey = event.target.value;
-    console.log("entering")
     if(searchKey == ""){
         searchKey="all";
     }
-    console.log(searchKey)
     searchBarContainer.innerHTML = `<a href="/browse/${searchKey}/1/${limit}"><i class="bi bi-search"></i></a>`
 })
+
+
 
 
 window.element = element;
@@ -135,13 +132,9 @@ window.element = element;
 
 
 function element(page, totalPage){
-    console.log(search)
-
     let divs = '';
     let before = page - 1;
     let after = page + 1;
-
-    console.log("totalPage: " + totalPage)
 
     if(before < 0){
         before += 1;

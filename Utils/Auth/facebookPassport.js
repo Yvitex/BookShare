@@ -4,7 +4,7 @@ function facebookAuth(passport, User, findOrCreate){
     passport.use(new FacebookStrategy({
         clientID: process.env.FB_ID,
         clientSecret: process.env.FB_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/home",
+        callbackURL: "https://bookshare2.onrender.com/auth/facebook/home",
         profileFields: ['id', 'displayName', 'name', 'photos', 'emails']
       },
       function(accessToken, refreshToken, profile, cb) {
