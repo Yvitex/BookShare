@@ -43,12 +43,12 @@
         </div>
         <p class="login-info">Username</p>
         <div class="form-floating mb-3 input-text">
-            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
             <label for="floatingInput">Mike Wazowski</label>
         </div>
           <p class="login-info">Password</p>
         <div class="form-floating mb-3 input-text">
-            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com" required>
             <label class="hide-if-small" for="floatingInput">examplepassword123!!</label>
         </div>
         <div class="separator-container">
@@ -58,8 +58,11 @@
         </div>
         <div class="icon-container">
             <!-- <a href="/auth/facebook"><i class="bi bi-facebook"></i></a> -->
-            <a href="/auth/google"><i class="bi bi-google"></i></a>
+            
+            
         </div>
+        
+        <a href="/auth/google"><button type="button" class="btn btn-outline-secondary login-button"><i class="bi bi-google"></i> Log In with Google</button></a>
         <button type="submit" class="btn btn-secondary login-button">Log In</button>
         <p class="account-notice">Don’t have an account? <span class="switch sw-signup">Sign Up</span> instead</p>
     </form>
@@ -73,17 +76,17 @@
         </div>
         <p class="login-info">Username</p>
         <div class="form-floating mb-3 input-text">
-            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
             <label for="floatingInput">Mike Wazowski</label>
         </div>
         <p class="login-info">Email</p>
         <div class="form-floating mb-3 input-text">
-            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
             <label for="floatingInput">sample@gmail.com</label>
         </div>
           <p class="login-info">Password</p>
         <div class="form-floating mb-3 input-text">
-            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com" required>
             <label for="floatingInput">examplepassword123!!</label>
         </div>
         <div class="separator-container">
@@ -93,8 +96,9 @@
         </div>
         <div class="icon-container">
             <!-- <a href="/auth/facebook"><i class="bi bi-facebook"></i></a> -->
-            <a href="/auth/google"><i class="bi bi-google"></i></a>
+            <!-- <a href="/auth/google"><i class="bi bi-google"></i></a> -->
         </div>
+        <a href="/auth/google"><button type="button" class="btn btn-outline-secondary login-button"><i class="bi bi-google"></i> Log In with Google</button></a>
         <button type="submit" class="btn btn-secondary login-button">Sign Up</button>
         <p class="account-notice">Already have an Account? <span class="switch sw-login">Log In</span> instead</p>
     </form>

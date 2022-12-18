@@ -407,14 +407,14 @@ button:hover {
 }
 
 .account-page-container i{
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .login-color{
-    color: #2C3333;
     font-weight: 400;
     font-weight: bolder;
     font-size: 24px;
+    color: #222828;
 }
 
 .login-info{
@@ -450,14 +450,13 @@ button:hover {
 }
 
 .bi-facebook, .bi-google{
-    font-size: 32px;
-    margin: 0 16px;
-    transition: all 0.4s;
+    font-size: 12px;
+    height: 100%
 }
 
-.bi-facebook:hover, .bi-google:hover{
-    font-size: 40px;
-}
+/* .bi-facebook:hover, .bi-google:hover{
+    font-size: 16px;
+} */
 
 .login-button{
     width: 100%;
@@ -465,6 +464,32 @@ button:hover {
     color: #F1F1F1;
     background-color: #3F4E4F;
 }
+
+.login-page .btn-outline-secondary{
+    width: 100%;
+    margin: 8px 0;
+    color: black;
+    background-color: transparent;
+}
+
+.login-page .btn-outline-secondary:hover{
+    color: #F1F1F1;
+    background-color: #3F4E4F;
+}
+
+.signup-page .btn-outline-secondary{
+    width: 100%;
+    margin: 8px 0;
+    color: black;
+    background-color: transparent;
+}
+
+.signup-page .btn-outline-secondary:hover{
+    color: #F1F1F1;
+    background-color: #3F4E4F;
+}
+
+
 
 .account-notice{
     font-size: 12px;
@@ -476,8 +501,8 @@ button:hover {
     cursor:pointer;
 }
 
-.bi-x{
-    font-size: 32px;
+.close-login{
+    font-size: 32px !important; 
 }
 
 .profile-picture{
@@ -764,7 +789,7 @@ footer {
     }
 
     .account-page-container i{
-        font-size: 32px;
+        font-size: 16px;
     }
 
     .login-info{
@@ -773,6 +798,7 @@ footer {
 
     .login-color{
         font-size: 32px;
+        
     }
 
     .account-page-container{
