@@ -1,12 +1,10 @@
-const passport = require("passport");
-const { initUserDB } = require("../userDB");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 function authGoogle(passport, User, findOrCreate){
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT,
         clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: "https://bookshare2.onrender.com/auth/google/home",
+        callbackURL: "https://share.up.railway.app/auth/google/home",
     }, 
     function(accessToken, refreshToken, profile, cb){
         User.findOrCreate(
