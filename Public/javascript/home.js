@@ -186,10 +186,6 @@ function element(page, totalPage){
 
 element(page + 1, Math.ceil(totalPage / limit));
 
-
-
-
-
 $('.carousel').carousel({
     interval: 10000,
 })

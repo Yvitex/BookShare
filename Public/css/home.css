@@ -761,6 +761,13 @@ footer {
     margin-left: 16px;
 }
 
+#display_image p {
+    visibility: hidden;
+}
+
+
+
+
 @media (min-width: 481px) {
     .image_head {
         height: 300px;
@@ -779,6 +786,24 @@ footer {
 }
 
 @media (min-width: 670px) {
+
+    #display_image {
+        width: 240px;
+        height: 350px;
+        border: solid white;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #display_image p {
+        visibility: visible;
+        text-align: center;
+        color: #F1F1F1;
+    }
 
     .download-button{
         font-size: 16px;
